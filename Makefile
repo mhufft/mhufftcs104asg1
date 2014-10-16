@@ -7,7 +7,7 @@
 
 sources = stringset.cpp main.cpp
 headers = stringset.h
-extra   = Makefile README
+extra   = Makefile README .gitignore
 objects = main.o
 output = oc
 dir = $(pwd)
