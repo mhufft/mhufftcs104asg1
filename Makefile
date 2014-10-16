@@ -47,11 +47,12 @@ gitclone:
 
 gitpush:
 	git add $(sources) $(headers) $(extra)
-	git commit
+	git commit -q
 	git push origin master
 
 gitpull:
-	git pull $(gitaddress) master
+	#mv Makefile Makefile.bak
+	git pull -f $(gitaddress) master
 
 deps:
 	echo "Idk what to do yet"
