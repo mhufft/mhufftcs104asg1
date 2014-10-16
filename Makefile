@@ -5,13 +5,14 @@
 # $< is code for using a variable source file
 # $@ is code for using a variable target file
 
-sources = stringset.cpp main.cpp 
+sources = stringset.cpp main.cpp
 headers = stringset.h
 extra   = Makefile README
 objects = main.o
 output = oc
 dir = $(pwd)
 gitaddress = https://github.com/mhufft/mhufftcs104asg1.git
+gitproject = mhufftcs104asg1
 
 all: compile
 
@@ -41,6 +42,7 @@ gitinit:
 	git remote add origin $(gitaddress)
 
 gitclone:
+	rm -rf $(gitproject)
 	git clone $(gitaddress)
 
 gitpush:
