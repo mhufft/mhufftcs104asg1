@@ -8,11 +8,17 @@
 sources = stringset.cpp main.cpp
 headers = stringset.h
 extra   = Makefile README .gitignore
-objects = main.o
+objects = main.o stringset.o
 output = oc
-dir = $(pwd)
+dir = $(shell pwd)
 gitaddress = https://github.com/mhufft/mhufftcs104asg1.git
 gitproject = mhufftcs104asg1
+
+#The following code make a macro for \n to be replaced by the newline character
+define \n
+
+
+endef
 
 all: compile
 
@@ -26,7 +32,7 @@ spotless: clean
 	rm "$(dir)/$(output)"
 
 clean:
-	$(foreach var,$(objects),"rm $(dir)/$(var)")
+	$(foreach var,$(objects),rm -f "$(dir)/$(var)"${\n})
 
 run: $(output)
 	$(output)
