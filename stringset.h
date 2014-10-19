@@ -2,7 +2,7 @@
 //mhufft@ucsc.edu ceadler@ucsc.edu
 
 //stringset.h
-//Starter code from Westly Mackey
+//Starter code from Wesly Mackey
 
 #ifndef __STRINGSET__
 #define __STRINGSET__
