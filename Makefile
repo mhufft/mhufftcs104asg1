@@ -53,7 +53,7 @@ gitclone:
 
 gitpush:
 	git add $(sources) $(headers) $(extra)
-	git commit -q
+	git commit --untracked-files=no
 	git push origin master
 
 gitpull:
