@@ -8,7 +8,7 @@
 sources = stringset.cpp auxlib.cpp main.cpp
 objects = stringset.o   auxlib.o   main.o
 headers = stringset.h   auxlib.h      
-extra   = Makefile README .gitignore
+extra   = Makefile README .gitignore PARTNER
 output = oc
 dir = $(shell pwd)
 gitaddress = https://github.com/mhufft/mhufftcs104asg1.git
@@ -63,7 +63,7 @@ gitpull:
 	git pull -f $(gitaddress) master
 
 deps:
-	echo "Idk what to do yet"
+	echo ""
    
 space:
 	@for unused in 1 2 3 4 5; do echo "*"; done
@@ -71,3 +71,6 @@ space:
 everything: clear space clean compile run
 
 everythingit: everything gitpush
+
+submit: $(sources) $(headers) $(extra)
+	submit cmps104a-wm.f14 asg1 $(sources) $(headers) $(extra)

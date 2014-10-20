@@ -17,13 +17,17 @@ const string cpp_exe = "/usr/bin/cpp";
 string cpp_command = "";
 
 FILE* oc_file = nullptr;
+string oc_filename;
 
 
-void cpp_popen(string filename)
+void cpp_popen(string filename, string options)
 {
    cpp_command =  cpp_exe;
    cpp_command += " ";
+   cpp_command += options;
+   cpp_command += " \"";
    cpp_command += filename;
+   cpp_command += "\"";
    oc_file = popen(cpp_command.c_str(), "r");
    if (oc_file == nullptr)
    {
@@ -43,23 +47,30 @@ void cpp_pclose(void)
    }
 }
 
-
-void insert_define(string definition)
+string D_format(char* optarg)
 {
+   return string("-D") + optarg + string(" ");
 }
+
+const char* get_filename(void)
+{
+   return ((oc_filename.substr(0, oc_filename.find(".")))+".str").c_str();
+}
+
 
 
 void scan_options(int argc, char** argv)
 {
    int option;
+   string cpp_opts;
    while(true) {
       option = getopt (argc, argv, "@:D:ly");
       if (option == EOF) break;
       switch (option) {
-         case '@': set_debugflags (optarg);   break;
-         case 'D': insert_define  (optarg);   break;
-         case 'l': /*yy_flex_debug = 1;    */ break;
-         case 'y': /*yydebug = 1;          */ break;
+         case '@': set_debugflags (optarg);         break;
+         case 'D': cpp_opts+= D_format(optarg);  break;
+         case 'l': /*yy_flex_debug = 1;    */       break;
+         case 'y': /*yydebug = 1;          */       break;
          default:
          {
             cerr << "Bad option: \'" << optopt << "\'"<< endl;
@@ -69,11 +80,13 @@ void scan_options(int argc, char** argv)
    }
    if (optind > argc) 
    {
-      cerr << "Usage: " << get_execname() << " [-@:D:ly] [filename]" << endl;
+      cerr << "Usage: " << get_execname() 
+           << " [-@:D:ly] [filename]" << endl;
       exit (get_exitstatus());
    }
    const char* filename = (optind == argc ? "-" : argv[optind]);
-   cpp_popen (filename);
+   oc_filename = filename;
+   cpp_popen (filename, cpp_opts);
    DEBUGF ('m', "filename = %s, oc_file = %p, fileno (oc_file) = %d\n",
            filename, oc_file, fileno (oc_file));
 }
@@ -124,7 +137,7 @@ int main (int argc, char** argv)
 {
    scan_options(argc, argv);
    process_file();
-   FILE* outt = fopen("something.txt", "w");
+   FILE* outt = fopen(get_filename(), "w");
    dump_stringset(outt);
    return EXIT_SUCCESS;
 }
