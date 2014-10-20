@@ -1,17 +1,17 @@
-//Max Hufft and Carl Eadler
-//mhufft@ucsc.edu ceadler@ucsc.edu
-
-//stringset.h
-//Starter code from Wesly Mackey
-
 #ifndef __STRINGSET__
 #define __STRINGSET__
 
-#include <iostream>
 #include <string>
+#include <unordered_set>
+using namespace std;
 
-const std::string* intern_stringset (const char*);
+#include <stdio.h>
 
-void dump_stringset (std::ostream&);
+#include "auxlib.h"
 
+const string* intern_stringset (const char*);
+
+void dump_stringset (FILE*);
+
+RCSH("$Id: stringset.h,v 1.1 2013-10-11 18:53:00-07 - - $")
 #endif

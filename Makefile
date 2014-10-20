@@ -5,14 +5,16 @@
 # $< is code for using a variable source file
 # $@ is code for using a variable target file
 
-sources = stringset.cpp main.cpp
-headers = stringset.h
+sources = stringset.cpp auxlib.cpp main.cpp
+objects = stringset.o   auxlib.o   main.o
+headers = stringset.h   auxlib.h      
 extra   = Makefile README .gitignore
-objects = main.o stringset.o
 output = oc
 dir = $(shell pwd)
 gitaddress = https://github.com/mhufft/mhufftcs104asg1.git
 gitproject = mhufftcs104asg1
+
+sampleParameter = auxlib.h
 
 #The following code make a macro for \n to be replaced by the newline character
 define \n
@@ -35,7 +37,7 @@ clean:
 	$(foreach var,$(objects),rm -f "$(dir)/$(var)"${\n})
 
 run: $(output)
-	$(output)
+	$(output) $(sampleParameter)
 
 
 clear:
@@ -62,7 +64,10 @@ gitpull:
 
 deps:
 	echo "Idk what to do yet"
+   
+space:
+	@for unused in 1 2 3 4 5; do echo "*"; done
 
-everything: clear clean compile run
+everything: clear space clean compile run
 
 everythingit: everything gitpush
